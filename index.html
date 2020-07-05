@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ru">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title> МЕСТО</title>
+  <link rel="icon" href="#favicon">
+  <link rel="stylesheet" href="./pages/index.css">
+ </head>
+
+  <body>
+
+  <div class="page">
+
+      <header class="header">
+        <img src="./images/logo.svg" alt="Лого" class="header__logo">
+      </header>
+
+      <main>
+        <section class="profile indention">
+          <div class="profile__user">
+            <img src="./images/image.jpg" alt="Аватарка" class="profile__image">
+            <div class="profile__about">
+              <div class="profile__container">
+                <h1 class="profile__name"> Жак-Ив Кусто</h1>
+                <button class="profile__edit-button transition" type="button" aria-label="Редактировать"></button>
+              </div>
+              <p class="profile__description"> Исследователь океана</p>
+            </div>
+          </div>
+          <button class="profile__add-button transition" type="button" aria-label="Добавить фото"></button>
+        </section>
+
+        <section class="places indention">
+          <ul class="places__catalogue">
+            <li class="place">
+              <img src="./images/places/pagoda.jpg" alt="Пагода, Япония" class="place__pic">
+              <div class="place__description">
+                <h2 class="place__name"> Токио</h2>
+                <button class="place__button transition" type="button" aria-label="Лайк"></button>
+              </div>
+            </li>
+            <li class="place">
+              <img src="./images/places/golden_gate.jpg" alt="Мост золотые ворота" class="place__pic">
+              <div class="place__description">
+                <h2 class="place__name"> Сан-Франциско</h2>
+                <button class="place__button transition" type="button" aria-label="Лайк"></button>
+              </div>
+            </li>
+            <li class="place">
+              <img src="./images/places/baikal.jpg" alt="лед байкала" class="place__pic">
+              <div class="place__description">
+                <h2 class="place__name"> Байкал</h2>
+                <button class="place__button transition" type="button" aria-label="Лайк"></button>
+              </div>
+            </li>
+            <li class="place">
+              <img src="./images/places/ostankino_tower.jpg" alt="Останкинская башня" class="place__pic">
+              <div class="place__description">
+                <h2 class="place__name"> Москва</h2>
+                <button class="place__button transition" type="button" aria-label="Лайк"></button>
+              </div>
+            </li>
+            <li class="place">
+              <img src="./images/places/katmandu_nepal.jpg" alt="Храм, Непал" class="place__pic">
+              <div class="place__description">
+                <h2 class="place__name"> Катманду</h2>
+                <button class="place__button transition" type="button" aria-label="Лайк"></button>
+              </div>
+            </li>
+            <li class="place">
+              <img src="./images/places/kapetown.jpg" alt="Океан" class="place__pic">
+              <div class="place__description">
+                <h2 class="place__name"> Кейптаун</h2>
+                <button class="place__button transition" type="button" aria-label="Лайк"></button>
+              </div>
+            </li>
+          </ul>
+        </section>
+
+        <section class="popup">
+          <div class="popup__about">
+            <button class="popup__close transition" type="button" aria-label="Закрыть"></button>
+            <h2 class="popup__title"> Редактировать профиль</h2>
+            <form class="popup__form" name="info" method="get" action="#">
+              <input class="popup__input popup__input_name" type="text" name="name" placeholder="Имя" required>
+              <input class="popup__input popup__input_description" type="text" name="description" placeholder="О себе" required>
+              <button class="popup__button" type="submit"> Сохранить</button>
+            </form>
+          </div>
+        </section>
+
+      </main>
+
+      <footer class="footer indention">
+        <p class="footer__copyright"> Nikonov Dmitry 2020. &copy;</p>
+      </footer>
+
+  </div>
+
+    <script src="./scripts/script.js"></script>
+
+  </body>
+</html>

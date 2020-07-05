@@ -1,0 +1,15 @@
+.place__button {
+   margin: 0 17.24px 0 0;
+   padding: 0;
+   background: url(../../../images/h.svg);
+   border: none;
+   width: 20.76px;
+   height: 18.13px;
+   object-fit: cover;
+   box-shadow: none;
+   cursor: pointer;
+}
+
+.place__button:hover {
+  opacity: .5;
+}

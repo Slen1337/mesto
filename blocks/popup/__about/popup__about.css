@@ -1,0 +1,15 @@
+.popup__about {
+    display: block;
+    position: relative;
+    padding: 34px 36px;
+    min-width: 358px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.15);
+    background: white;
+}
+
+@media screen and (max-width: 430px) {
+  .popup__info {
+    min-width: calc(100% - 72px);
+  }
+}

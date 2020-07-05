@@ -1,0 +1,12 @@
+@import url(./__catalogue/places__catalogue.css);
+
+.places {
+    padding-top: 50px;
+    width: 100%;
+}
+
+@media screen and (max-width: 590px) {
+  .places {
+    padding-top: 36px;
+  }
+}
