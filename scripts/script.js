@@ -9,11 +9,12 @@ let nameProfile = document.querySelector('.profile__name')
 let descriptionProfile = document.querySelector('.profile__description')
 
 const popupToggle = function(event) {
-    popup.classList.toggle('popup_opened')
-  if (event.target === editButton) {
-    nameInput.value = nameProfile.textContent;
-    descriptionInput.value = descriptionProfile.textContent;
-  }
+
+    if (popup.classList.contains('popup_opened') === false) {
+        nameInput.value = nameProfile.textContent;
+        descriptionInput.value = descriptionProfile.textContent;
+    }
+        popup.classList.toggle('popup_opened')
 }
 
 const closePopup = function(event) {
