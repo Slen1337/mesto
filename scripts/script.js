@@ -9,10 +9,11 @@ let nameProfile = document.querySelector('.profile__name')
 let descriptionProfile = document.querySelector('.profile__description')
 
 const popupToggle = function(event) {
-    popup.classList.toggle('popup__opened')
-
+    popup.classList.toggle('popup_opened')
+  if (event.target === editButton) {
     nameInput.value = nameProfile.textContent;
     descriptionInput.value = descriptionProfile.textContent;
+  }
 }
 
 const closePopup = function(event) {
@@ -27,7 +28,7 @@ const formSubmitHandler = function(event) {
     nameProfile.textContent = nameInput.value;
     descriptionProfile.textContent = descriptionInput.value;
 
-    popupToggle()
+    popupToggle(event)
 }
 
 editButton.addEventListener('click', popupToggle)

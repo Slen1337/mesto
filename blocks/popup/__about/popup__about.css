@@ -8,8 +8,9 @@
     background: white;
 }
 
-@media screen and (max-width: 430px) {
-  .popup__info {
-    min-width: calc(100% - 72px);
+@media screen and (max-width: 500px) {
+  .popup__about {
+    min-width: 62.5%;
+    padding: 30px 20px;
   }
 }
