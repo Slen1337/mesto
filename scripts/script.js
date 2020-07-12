@@ -50,6 +50,11 @@ const closeButtonPlace = document.querySelector('.popup__close_place')
 
 
   const togglePopup = function(popup) {
+
+    if (popup.classList.contains('popup_opened') === false) {
+      nameInput.value = nameProfile.textContent;
+      descriptionInput.value = descriptionProfile.textContent;
+  }
       popup.classList.toggle('popup_opened')
 }
 
@@ -143,6 +148,7 @@ const closeButtonPlace = document.querySelector('.popup__close_place')
        togglePopup(popupImage)
   }
 })
+
   formAbout.addEventListener('submit', formSubmitHandler)
   formPlace.addEventListener('submit', placeSubmitHandler)
 
@@ -153,6 +159,7 @@ const closeButtonPlace = document.querySelector('.popup__close_place')
 
     togglePopup(popupAbout)
 })
+
   addButton.addEventListener('click', () => {togglePopup(popupPlace)})
   closeButtonAbout.addEventListener('click', () => {togglePopup(popupAbout)})
   closeButtonPlace.addEventListener('click', () => {togglePopup(popupPlace)})
