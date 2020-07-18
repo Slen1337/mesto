@@ -1,36 +1,3 @@
-const initialCards = [
-  {
-    name: 'Мост "Золотые Ворота"',
-    link:
-      "https://cdn.pixabay.com/photo/2016/11/29/07/59/architecture-1868265_960_720.jpg",
-  },
-  {
-    name: "Останкинская башня",
-    link:
-      "https://cdn.pixabay.com/photo/2016/07/14/15/20/television-1516914_960_720.jpg",
-  },
-  {
-    name: "Пагода Senso-дзи",
-    link:
-      "https://cdn.pixabay.com/photo/2017/06/15/14/04/pagoda-2405537_960_720.jpg",
-  },
-  {
-    name: "Кейптаун",
-    link:
-      "https://cdn.pixabay.com/photo/2018/07/16/10/11/table-bay-harbour-3541607_960_720.jpg",
-  },
-  {
-    name: "Непал, храм Джанаки",
-    link:
-      "https://cdn.pixabay.com/photo/2014/07/10/07/57/janaki-temple-388863_960_720.jpg",
-  },
-  {
-    name: "Флоренция",
-    link:
-      "https://cdn.pixabay.com/photo/2016/09/08/23/08/florence-1655830_960_720.jpg",
-  },
-];
-
 const popupAbout = document.querySelector(".popup_about");
 const popupPlace = document.querySelector(".popup_place");
 const popupImage = document.querySelector(".popup_image");
@@ -60,7 +27,20 @@ const nameImageInPopup = document.querySelector('.popup__image-name')
 const placeTemplate = document.querySelector('.place-template').content
 const placeCatalogue = document.querySelector('.places__catalogue')
 
+const validationProps = {
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  submitButtonSelector: ".popup__button",
+  inactiveButtonClass: "popup__button_inactive",
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: "popup__input-error_active",
+};
 
+const inputSelectorError = ".popup__input-error";
+const buttonTypeAboutClass = ".popup__button_type_about";
+const buttonTypeAboutPlace = ".popup__button_type_place";
+
+// Открыть и закрыть попапы
 const togglePopup = function (popup) {
   if (popup.classList.contains("popup_opened") === false) {
     nameInput.value = nameProfile.textContent;
@@ -78,10 +58,13 @@ const togglePopup = function (popup) {
   }
 };
 
+// очистка формы
 
 const resetForm = function(form) {
-  form.reset()
+  form.reset();
 }
+
+// добавляю в popup image
 
 const addPopupImage = function (e) {
     imageInPopup.src = ''
@@ -93,6 +76,8 @@ const addPopupImage = function (e) {
     nameImageInPopup.textContent = e.target.alt
 };
 
+
+// меняются данные профиля через popup about
 const formSubmitHandler = function (e) {
   e.preventDefault();
 
@@ -102,30 +87,34 @@ const formSubmitHandler = function (e) {
   togglePopup(popupAbout);
 };
 
-const renderCards = function (place) {
+// загрузка карточек из массива
+const renderCard = function (place) {
+  // клон содержимого тэга темплейт
   const placeElement = placeTemplate.cloneNode(true)
   const placeImage= placeElement.querySelector('.place__pic')
 
+
+  // из массива наполняем
   placeImage.src = place.link
   placeImage.alt = place.name
   placeElement.querySelector('.place__name').textContent = place.name
-
+// слушатели на эл карточки
   placeListener(placeElement);
 
   placeCatalogue.prepend(placeElement);
 };
-
+// добавление новой карточки
 const placeSubmitHandler = function (e) {
   e.preventDefault();
-
+// грузим данные из формы в массив
   const placeName = {
     name: newPlaceNameInput.value,
     link: newPlaceLinkInput.value,
   };
 
-  renderCards(placeName);
+  renderCard(placeName);
   togglePopup(popupPlace);
-
+// обнуление
   newPlaceLinkInput.value = "";
   newPlaceNameInput.value = "";
   resetForm(formPlace)
@@ -153,7 +142,7 @@ const closePopupEsc = function(e) {
   }
 }
 
-
+// слушатели
 formAbout.addEventListener('submit', (e) => {
   const submitButton = formAbout.querySelector('.popup__button')
   if (submitButton.classList.contains('popup__button_inactive')) {
@@ -174,8 +163,8 @@ editButton.addEventListener("click", () => {
   nameInput.value = nameProfile.textContent;
   descriptionInput.value = descriptionProfile.textContent;
   togglePopup(popupAbout);
-  hideError(formAbout)
-  resetButton(popupAbout)
+  hideError(formAbout);
+  resetButton(popupAbout);
 });
 
 addButton.addEventListener("click", () => {
@@ -209,6 +198,7 @@ const placeListener = function (placeElement) {
 };
 
 initialCards.forEach(place => {
-  renderCards(place);
+  renderCard(place);
 });
 
+enableValidation(validationProps);
