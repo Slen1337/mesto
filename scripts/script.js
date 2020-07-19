@@ -2,7 +2,6 @@ const popupAbout = document.querySelector(".popup_about");
 const popupPlace = document.querySelector(".popup_place");
 const popupImage = document.querySelector(".popup_image");
 
-
 const formAbout = document.querySelector(".popup__form_about");
 const formPlace = document.querySelector(".popup__form_place");
 
@@ -16,23 +15,23 @@ const addButton = document.querySelector(".profile__add-button");
 const editButton = document.querySelector(".profile__edit-button");
 const closeButtonAbout = document.querySelector(".popup__close_about");
 const closeButtonPlace = document.querySelector(".popup__close_place");
-const closeButtonImage = document.querySelector('.popup__close_image')
+const closeButtonImage = document.querySelector(".popup__close_image");
 
-const newPlaceNameInput = document.querySelector('.popup__input_place-name')
-const newPlaceLinkInput = document.querySelector('.popup__input_link')
+const newPlaceNameInput = document.querySelector(".popup__input_place-name");
+const newPlaceLinkInput = document.querySelector(".popup__input_link");
 
-const imageInPopup = document.querySelector('.popup__image')
-const nameImageInPopup = document.querySelector('.popup__image-name')
+const imageInPopup = document.querySelector(".popup__image");
+const nameImageInPopup = document.querySelector(".popup__image-name");
 
-const placeTemplate = document.querySelector('.place-template').content
-const placeCatalogue = document.querySelector('.places__catalogue')
+const placeTemplate = document.querySelector(".place-template").content;
+const placeCatalogue = document.querySelector(".places__catalogue");
 
 const validationProps = {
-  formSelector: '.popup__form',
-  inputSelector: '.popup__input',
+  formSelector: ".popup__form",
+  inputSelector: ".popup__input",
   submitButtonSelector: ".popup__button",
   inactiveButtonClass: "popup__button_inactive",
-  inputErrorClass: 'popup__input_type_error',
+  inputErrorClass: "popup__input_type_error",
   errorClass: "popup__input-error_active",
 };
 
@@ -49,33 +48,31 @@ const togglePopup = function (popup) {
   popup.classList.toggle("popup_opened");
 
   if (popup.classList.contains("popup_opened")) {
-    document.addEventListener("keyup", closePopupEsc)
-    popup.addEventListener("click", closePopupBackground)
-  }
-  else {
-    document.removeEventListener("keyup", closePopupEsc)
-    popup.removeEventListener("click", closePopupBackground)
+    document.addEventListener("keyup", closePopupEsc);
+    popup.addEventListener("click", closePopupBackground);
+  } else {
+    document.removeEventListener("keyup", closePopupEsc);
+    popup.removeEventListener("click", closePopupBackground);
   }
 };
 
 // очистка формы
 
-const resetForm = function(form) {
+const resetForm = function (form) {
   form.reset();
-}
+};
 
 // добавляю в popup image
 
 const addPopupImage = function (e) {
-    imageInPopup.src = ''
-    imageInPopup.alt = ''
-    nameImageInPopup.textContent = ''
+  imageInPopup.src = "";
+  imageInPopup.alt = "";
+  nameImageInPopup.textContent = "";
 
-    imageInPopup.src = e.target.src
-    imageInPopup.alt = e.target.alt
-    nameImageInPopup.textContent = e.target.alt
+  imageInPopup.src = e.target.src;
+  imageInPopup.alt = e.target.alt;
+  nameImageInPopup.textContent = e.target.alt;
 };
-
 
 // меняются данные профиля через popup about
 const formSubmitHandler = function (e) {
@@ -87,26 +84,43 @@ const formSubmitHandler = function (e) {
   togglePopup(popupAbout);
 };
 
-// загрузка карточек из массива
-const renderCard = function (place) {
-  // клон содержимого тэга темплейт
-  const placeElement = placeTemplate.cloneNode(true)
-  const placeImage= placeElement.querySelector('.place__pic')
+const addCard = (place) => {
+  const placeElement = placeTemplate.cloneNode(true);
+
+  const placeImage = placeElement.querySelector(".place__pic");
+  placeElement.querySelector(".place__name").textContent = place.name;
 
 
-  // из массива наполняем
-  placeImage.src = place.link
-  placeImage.alt = place.name
-  placeElement.querySelector('.place__name').textContent = place.name
-// слушатели на эл карточки
-  placeListener(placeElement);
+  placeImage.src = place.link;
+  placeImage.alt = place.name;
 
+  placeElement
+    .querySelector(".place__button-delete")
+    .addEventListener("click", deleteCard);
+  placeElement
+    .querySelector(".place__button-like")
+    .addEventListener("click", toggleLike);
+
+  placeImage.addEventListener("click", () => previewPicture(place));
+
+  return placeElement;
+};
+
+const previewPicture = (place) => {
+  imageInPopup.src = place.link;
+  imageInPopup.alt = place.name;
+  nameImageInPopup.textContent = place.name;
+  togglePopup(popupImage);
+};
+
+const renderCard = (place) => {
+  let placeElement = addCard(place);
   placeCatalogue.prepend(placeElement);
 };
-// добавление новой карточки
+
 const placeSubmitHandler = function (e) {
   e.preventDefault();
-// грузим данные из формы в массив
+
   const placeName = {
     name: newPlaceNameInput.value,
     link: newPlaceLinkInput.value,
@@ -114,10 +128,10 @@ const placeSubmitHandler = function (e) {
 
   renderCard(placeName);
   togglePopup(popupPlace);
-// обнуление
+  // обнуление
   newPlaceLinkInput.value = "";
   newPlaceNameInput.value = "";
-  resetForm(formPlace)
+  resetForm(formPlace);
 };
 
 const toggleLike = function (e) {
@@ -130,34 +144,36 @@ const deleteCard = function (e) {
 
 const closePopupBackground = function (e) {
   if (e.target !== e.currentTarget) {
-    return
+    return;
   }
   togglePopup(e.target);
 };
 
-const closePopupEsc = function(e) {
+const closePopupEsc = function (e) {
   if (e.key === "Escape") {
-    const openedPopup = document.querySelector(".popup_opened")
-    togglePopup(openedPopup)
+    const openedPopup = document.querySelector(".popup_opened");
+    togglePopup(openedPopup);
   }
-}
+};
 
 // слушатели
-formAbout.addEventListener('submit', (e) => {
-  const submitButton = formAbout.querySelector('.popup__button')
-  if (submitButton.classList.contains('popup__button_inactive')) {
-    return
-  } else { formSubmitHandler(e) }
-})
+formAbout.addEventListener("submit", (e) => {
+  const submitButton = formAbout.querySelector(".popup__button");
+  if (submitButton.classList.contains("popup__button_inactive")) {
+    return;
+  } else {
+    formSubmitHandler(e);
+  }
+});
 
-
-
-formPlace.addEventListener('submit', (e) => {
-  const submitButton = formPlace.querySelector('.popup__button')
-  if (submitButton.classList.contains('popup__button_inactive')) {
-    return
-  } else { placeSubmitHandler(e) }
-})
+formPlace.addEventListener("submit", (e) => {
+  const submitButton = formPlace.querySelector(".popup__button");
+  if (submitButton.classList.contains("popup__button_inactive")) {
+    return;
+  } else {
+    placeSubmitHandler(e);
+  }
+});
 
 editButton.addEventListener("click", () => {
   nameInput.value = nameProfile.textContent;
@@ -179,7 +195,7 @@ closeButtonAbout.addEventListener("click", () => {
 closeButtonPlace.addEventListener("click", () => {
   togglePopup(popupPlace);
 });
-closeButtonImage.addEventListener('click', () =>  {
+closeButtonImage.addEventListener("click", () => {
   togglePopup(popupImage);
 });
 
@@ -197,7 +213,7 @@ const placeListener = function (placeElement) {
   });
 };
 
-initialCards.forEach(place => {
+initialCards.forEach((place) => {
   renderCard(place);
 });
 
