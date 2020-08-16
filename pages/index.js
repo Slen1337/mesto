@@ -40,22 +40,6 @@ export const validationProps = {
   errorClass: "popup__input-error_active",
 };
 
-const placeSubmitHandler = function (e) {
-  e.preventDefault();
-
-  const place = {
-    name: newPlaceNameInput.value,
-    link: newPlaceLinkInput.value,
-  };
-  const newPlaceCard = new Card(place, placeTemplate);
-  const placeElement = newPlaceCard.generateCard();
-
-  placeCatalogue.prepend(placeElement);
-  togglePopup(popupPlace);
-
-  resetForm(formPlace);
-};
-
 // слушатели
 formAbout.addEventListener("submit", (e) => {
   const submitButton = formAbout.querySelector(".popup__button");
@@ -68,11 +52,9 @@ formAbout.addEventListener("submit", (e) => {
 
 formPlace.addEventListener("submit", (e) => {
   const submitButton = formPlace.querySelector(".popup__button");
-  if (submitButton.classList.contains("popup__button_inactive")) {
+  if (submitButton.classList.contains("popup__button_inactive"))
     return;
-  } else {
     placeSubmitHandler(e);
-  }
 });
 
 editButton.addEventListener("click", () => {
@@ -99,11 +81,32 @@ closeButtonImage.addEventListener("click", () => {
   togglePopup(popupImage);
 });
 
-initialCards.forEach((place) => {
+function addCard(card) {
+  placeCatalogue.append(card);
+}
+
+const renderPlace = (place) => {
   const card = new Card(place, placeTemplate);
   const placeElement = card.generateCard();
-  placeCatalogue.prepend(placeElement);
-});
+  placeCatalogue.prepend(placeElement)
+};
+
+const placeSubmitHandler = (e) => {
+  e.preventDefault();
+
+  const place = {
+    name: newPlaceNameInput.value,
+    link: newPlaceLinkInput.value,
+  };
+    renderPlace(place);
+
+  togglePopup(popupPlace);
+
+  resetForm(formPlace);
+};
+
+initialCards.forEach(renderPlace);
+
 
 const placeFormValidator = new FormValidator(validationProps, formPlace);
 const aboutFormValidator = new FormValidator(validationProps, formAbout);
