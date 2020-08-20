@@ -7,7 +7,6 @@ import PopupWithImage from "../components/PopupWithImage.js";
 import UserInfo from "../components/UserInfo.js";
 import { initialCards } from "../utils/initial-cards.js";
 import {
-  popupAbout,
   popupPlace,
   formAbout,
   formPlace,
@@ -25,47 +24,51 @@ import {
   validationProps,
 } from "../utils/constants.js";
 
+const popupAbout = document.querySelector(".popup_about");
+
 const popupWithImage = new PopupWithImage(
   popupImage,
   imageInPopup,
   nameImageInPopup
 );
+popupWithImage.setEventListeners();
 
-const handleCardClick = function (placeImage, placeName) {
+
+const handleCardClick = (placeImage, placeName) => {
   popupWithImage.open(placeImage, placeName);
-  popupWithImage.setEventListeners();
 };
 
-const cardsCatalogue = new Section(
-  {
-    items: initialCards,
-    renderer: (place) => {
-      const newPlaceCard = new Card(place, placeTemplate, handleCardClick);
-      const placeElement = newPlaceCard.generateCard();
+const renderCard = (place) => {
+  const newPlaceCard = new Card(place, placeTemplate, handleCardClick);
 
-      cardsCatalogue.addItem(placeElement);
-    },
-  },
-  placeCatalogue
-);
+  return newPlaceCard.generateCard();
+}
 
+const cardsCatalogue = new Section({
+  items: initialCards.reverse(),
+  renderer: (place) => {
+    cardsCatalogue.addItem(renderCard(place))
+  }
+}, placeCatalogue)
 cardsCatalogue.renderItems();
+
+
+const placePopup = new PopupWithForm(popupPlace, (place) => {
+  cardsCatalogue.addItem(renderCard(place));
+  placePopup.close()
+  }
+);
 
 const user = new UserInfo({
   name: nameProfile,
   description: descriptionProfile,
 });
 
-const placePopup = new PopupWithForm(popupPlace, (place) => {
-  const newPlaceCard = new Card(place, placeTemplate, handleCardClick);
-  const placeElement = newPlaceCard.generateCard();
-
-  cardsCatalogue.addItem(placeElement);
-});
 
 const aboutPopup = new PopupWithForm(popupAbout, () => {
   user.setUserInfo(nameInput, descriptionInput);
 });
+
 
 placePopup.setEventListeners();
 aboutPopup.setEventListeners();

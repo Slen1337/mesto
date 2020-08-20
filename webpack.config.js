@@ -9,6 +9,7 @@ module.exports = {
     filename: 'main.js',
     path: path.resolve(__dirname, 'dist'),
   },
+  devtool: 'eval',
   module: {
   rules: [
       {
@@ -24,17 +25,21 @@ module.exports = {
         ],
       }, 
      {
-        test: /\.(png|jpe?g|gif|woff|woff2|svg)$/i,
+        test: /\.(png|jpe?g|gif|svg)$/i,
         use: [
           {
             loader: 'file-loader',
           },
         ],
+      },
+      {
+        test: /\.(eot|ttf|woff|woff2)$/,
+        loader: 'file-loader?name=./vendor/[name].[ext]',
       }, 
-    {
-      test: /\.m?js$/,
-      exclude: /(node_modules|bower_components)/,
-      use: {
+      {
+        test: /\.m?js$/,
+        exclude: /(node_modules|bower_components)/,
+        use: {
         loader: 'babel-loader',
         options: {
           presets: ['@babel/preset-env']

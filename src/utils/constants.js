@@ -1,4 +1,3 @@
-const popupAbout = document.querySelector(".popup_about");
 const popupImage = document.querySelector(".popup_image");
 
 const nameInput = document.querySelector(".popup__input_name");
@@ -31,7 +30,6 @@ const validationProps = {
 };
 
 export {
-  popupAbout,
   popupImage,
   formAbout,
   formPlace,

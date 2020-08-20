@@ -42,7 +42,9 @@ export default class Card {
       .addEventListener("click", (e) => {
         this._like(e);
       });
-    this._element.querySelector(".place__pic").addEventListener("click", () => {
+    this._element
+    .querySelector(".place__pic")
+    .addEventListener("click", () => {
       this._openPopup(placeImage, placeName);
     });
   }
