@@ -1,116 +1,93 @@
-import '../pages/index.css';
-import { initialCards } from "../scripts/initial-cards.js";
-import { Card } from "../scripts/Card.js";
-import { FormValidator } from "../scripts/FormValidator.js";
+import './index.css';
+import Card from '../components/Card.js'
+import FormValidator from '../components/FormValidator.js'
+import Section from '../components/Section.js'
+import PopupWithForm from '../components/PopupWithForm.js'
+import PopupWithImage from '../components/PopupWithImage.js'
+import UserInfo from '../components/UserInfo.js'
+import { initialCards }  from '../utils/initial-cards.js'
 import {
   popupAbout,
-  popupImage,
+  popupPlace,
+  formAbout,
+  formPlace,
   nameProfile,
   descriptionProfile,
+  addButton,
+  editButton,
+  placeTemplate,
+  placeCatalogue,
+  popupImage,
+  imageInPopup,
+  nameImageInPopup,
   nameInput,
   descriptionInput,
-  togglePopup,
-  resetForm,
-  formSubmitHandler,
-  hideError,
-  resetButton,
-} from "../scripts/tools.js";
+  validationProps
+  } from '../utils/constants.js'
 
-const popupPlace = document.querySelector(".popup_place");
+const popupWithImage = new PopupWithImage(
+  popupImage, imageInPopup, nameImageInPopup)
 
-const formAbout = document.querySelector(".popup__form_about");
-const formPlace = document.querySelector(".popup__form_place");
-
-const addButton = document.querySelector(".profile__add-button");
-const editButton = document.querySelector(".profile__edit-button");
-const closeButtonAbout = document.querySelector(".popup__close_about");
-const closeButtonPlace = document.querySelector(".popup__close_place");
-const closeButtonImage = document.querySelector(".popup__close_image");
-
-const newPlaceNameInput = document.querySelector(".popup__input_place-name");
-const newPlaceLinkInput = document.querySelector(".popup__input_link");
-
-const placeTemplate = document.querySelector(".place-template").content;
-const placeCatalogue = document.querySelector(".places__catalogue");
-
-export const validationProps = {
-  inputSelector: ".popup__input",
-  submitButtonSelector: ".popup__button",
-  inactiveButtonClass: "popup__button_inactive",
-  inputErrorClass: "popup__input_type_error",
-  errorClass: "popup__input-error_active",
-};
-
-// слушатели
-formAbout.addEventListener("submit", (e) => {
-  const submitButton = formAbout.querySelector(".popup__button");
-  if (submitButton.classList.contains("popup__button_inactive")) {
-    return;
-  } else {
-    formSubmitHandler(e);
-  }
-});
-
-formPlace.addEventListener("submit", (e) => {
-  const submitButton = formPlace.querySelector(".popup__button");
-  if (submitButton.classList.contains("popup__button_inactive"))
-    return;
-    placeSubmitHandler(e);
-});
-
-editButton.addEventListener("click", () => {
-  nameInput.value = nameProfile.textContent;
-  descriptionInput.value = descriptionProfile.textContent;
-  togglePopup(popupAbout);
-  hideError(formAbout);
-  resetButton(popupAbout);
-});
-
-addButton.addEventListener("click", () => {
-  togglePopup(popupPlace);
-  resetForm(formPlace);
-  hideError(formPlace);
-  resetButton(popupPlace);
-});
-closeButtonAbout.addEventListener("click", () => {
-  togglePopup(popupAbout);
-});
-closeButtonPlace.addEventListener("click", () => {
-  togglePopup(popupPlace);
-});
-closeButtonImage.addEventListener("click", () => {
-  togglePopup(popupImage);
-});
-
-function addCard(card) {
-  placeCatalogue.append(card);
+const handleCardClick = function (placeImage, placeName) {
+  popupWithImage.open(placeImage, placeName)
+  popupWithImage.setEventListeners()
 }
 
-const renderPlace = (place) => {
-  const card = new Card(place, placeTemplate);
-  const placeElement = card.generateCard();
-  placeCatalogue.prepend(placeElement)
-};
+const cardsCatalogue = new Section({
+    items: initialCards,
+    renderer: (place) => {
 
-const placeSubmitHandler = (e) => {
-  e.preventDefault();
+      const newPlaceCard = new Card (place, placeTemplate, handleCardClick)
+      const placeElement = newPlaceCard.generateCard()
 
-  const place = {
-    name: newPlaceNameInput.value,
-    link: newPlaceLinkInput.value,
-  };
-    renderPlace(place);
+      cardsCatalogue.addItem(placeElement)
+    },
+  },
+  placeCatalogue
+)
 
-  togglePopup(popupPlace);
+cardsCatalogue.renderItems()
 
-  resetForm(formPlace);
-};
+const user = new UserInfo({
+  name: nameProfile,
+  description: descriptionProfile
+})
 
-initialCards.forEach(renderPlace);
+const placePopup = new PopupWithForm(popupPlace, (place) => {
+
+  const newPlaceCard = new Card (place, placeTemplate, handleCardClick)
+  const placeElement = newPlaceCard.generateCard()
 
 
-const placeFormValidator = new FormValidator(validationProps, formPlace);
-const aboutFormValidator = new FormValidator(validationProps, formAbout);
+  cardsCatalogue.addItem(placeElement)
+})
 
-placeFormValidator.enableValidation();
-aboutFormValidator.enableValidation();
+const aboutPopup = new PopupWithForm(popupAbout, () => {
+  user.setUserInfo(nameInput, descriptionInput)
+})
+
+placePopup.setEventListeners()
+aboutPopup.setEventListeners()
+
+// cлушатели
+
+addButton.addEventListener('click', () => {
+  placePopup.open()
+  placeFormValidator.hideError()
+  placeFormValidator.resetButton()
+})
+
+editButton.addEventListener('click', () => {
+  const userInfo = user.getUserInfo()
+  nameInput.value = userInfo.name
+  descriptionInput.value = userInfo.description
+  aboutPopup.open()
+  aboutFormValidator.hideError()
+  aboutFormValidator.resetButton()
+})
+
+const placeFormValidator = new FormValidator (validationProps, formPlace)
+const aboutFormValidator = new FormValidator(validationProps, formAbout)
+
+placeFormValidator.enableValidation()
+aboutFormValidator.enableValidation()
