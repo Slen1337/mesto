@@ -1,26 +1,20 @@
-import {
-  popupImage,
-  addPopupImage,
-  togglePopup
-} from "./tools.js";
-
-export class Card {
-  constructor(place, template) {
+export default class Card {
+  constructor(place, template, openPopup) {
     this._name = place.name;
     this._link = place.link;
     this._template = template;
+    this._openPopup = openPopup;
   }
 
   _getTemplate() {
-    const placeElement = this._template.cloneNode(true);
-    return placeElement;
+    return this._template.cloneNode(true);
   }
 
   generateCard() {
     this._element = this._getTemplate();
     const placeImage = this._element.querySelector(".place__pic");
     const placeName = this._element.querySelector(".place__name");
-    this._placeListeners();
+    this._placeListeners(placeImage, placeName);
 
     placeImage.src = this._link;
     placeImage.alt = this._name;
@@ -37,7 +31,7 @@ export class Card {
     e.target.closest(".place").remove();
   }
 
-  _placeListeners() {
+  _placeListeners(placeImage, placeName) {
     this._element
       .querySelector(".place__button-delete")
       .addEventListener("click", (e) => {
@@ -48,11 +42,8 @@ export class Card {
       .addEventListener("click", (e) => {
         this._like(e);
       });
-    this._element
-      .querySelector(".place__pic")
-      .addEventListener("click", (e) => {
-        addPopupImage(e);
-        togglePopup(popupImage);
-      });
+    this._element.querySelector(".place__pic").addEventListener("click", () => {
+      this._openPopup(placeImage, placeName);
+    });
   }
 }
