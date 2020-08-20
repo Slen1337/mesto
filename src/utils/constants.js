@@ -31,20 +31,20 @@ const validationProps = {
 };
 
 export {
-popupAbout,
-popupImage,
-formAbout,
-formPlace,
-imageInPopup,
-nameImageInPopup,
-nameProfile,
-nameInput,
-descriptionProfile,
-descriptionInput,
-addButton,
-editButton,
-popupPlace,
-placeTemplate,
-placeCatalogue,
-validationProps
-}
+  popupAbout,
+  popupImage,
+  formAbout,
+  formPlace,
+  imageInPopup,
+  nameImageInPopup,
+  nameProfile,
+  nameInput,
+  descriptionProfile,
+  descriptionInput,
+  addButton,
+  editButton,
+  popupPlace,
+  placeTemplate,
+  placeCatalogue,
+  validationProps
+};

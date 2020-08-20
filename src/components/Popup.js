@@ -4,33 +4,33 @@ export default class Popup {
   }
 
   open() {
-    this._popup.classList.add('popup_opened')
+    this._popup.classList.add("popup_opened");
 
-    document.addEventListener('keyup', (e) =>
-    this._handleEscClose(e))
+    document.addEventListener("keyup", (e) => this._handleEscClose(e));
   }
 
   close() {
-    this._popup.classList.remove('popup_opened')
-    document.removeEventListener('keyup', (e) =>
-    this._handleEscClose(e))
+    this._popup.classList.remove("popup_opened");
+    document.removeEventListener("keyup", (e) => this._handleEscClose(e));
   }
 
   _handleEscClose(e) {
-      if (e.key === 'Escape') {
-        this.close()
-      }
+    if (e.key === "Escape") {
+      this.close();
+    }
   }
 
   setEventListeners() {
-    this._closeButton = this._popup.querySelector('.popup__close')
-    this._closeButton.addEventListener('mousedown', () => {
-      this.close()
-    })
+    this._closeButton = this._popup.querySelector(".popup__close");
+    this._closeButton.addEventListener("mousedown", () => {
+      this.close();
+    });
 
-    this._popup.addEventListener('mousedown', (e) => {
-      if (e.target !== e.currentTarget) { return }
-      this.close()
-    })
+    this._popup.addEventListener("mousedown", (e) => {
+      if (e.target !== e.currentTarget) {
+        return;
+      }
+      this.close();
+    });
   }
 }
