@@ -35,7 +35,6 @@ export default class FormValidator {
     }
   }
 
-
   _setEventListeners() {
     const inputList = Array.from(
       this._formElement.querySelectorAll(this._inputSelector)
@@ -107,6 +106,4 @@ export default class FormValidator {
       this._inactiveSubmit();
     }
   }
-
-
 }

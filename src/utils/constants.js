@@ -1,4 +1,10 @@
+const popupAbout = document.querySelector(".popup_about");
 const popupImage = document.querySelector(".popup_image");
+const popupDeleteCard = document.querySelector('.popup_delete-card')
+
+const popupAvatar = document.querySelector('.popup_avatar')
+const formAvatar = document.querySelector('.popup__form_avatar')
+const editAvatarButton = document.querySelector('.profile__edit-avatar-button')
 
 const nameInput = document.querySelector(".popup__input_name");
 const nameProfile = document.querySelector(".profile__name");
@@ -20,6 +26,10 @@ const editButton = document.querySelector(".profile__edit-button");
 const placeTemplate = document.querySelector(".place-template").content;
 const placeCatalogue = document.querySelector(".places__catalogue");
 
+const submitButtonPlace = document.querySelector('.popup__button_type_place')
+const submitButtonAbout = document.querySelector('.popup__button_type_about')
+const submitButtonAvatar = document.querySelector('.popup__button_type_avatar')
+
 const validationProps = {
   inputSelector: ".popup__input",
   submitButtonSelector: ".popup__button",
@@ -30,6 +40,7 @@ const validationProps = {
 };
 
 export {
+  popupAbout,
   popupImage,
   formAbout,
   formPlace,
@@ -44,5 +55,12 @@ export {
   popupPlace,
   placeTemplate,
   placeCatalogue,
+  popupDeleteCard,
+  popupAvatar,
+  formAvatar,
+  editAvatarButton,
+  submitButtonAbout,
+  submitButtonAvatar,
+  submitButtonPlace,
   validationProps
 };
