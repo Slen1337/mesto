@@ -1,15 +1,15 @@
 .profile__image {
+    max-width: 120px;
     height: 120px;
-    width: 120px;
+    width: 100%;
     border-radius: 50%;
     object-fit: cover;
-    background: center no-repeat;
-    background-size: cover;
-    position: relative;
-    cursor: pointer;
 }
 
-.profile__image:hover .profile__edit-avatar-button {
-  display: block;
-  background: url(../../../images/pencil.svg) rgba(0, 0, 0, .8) center no-repeat;
+@media screen and (max-width: 760px) {
+    .profile__image {
+        margin: auto;
+        margin-bottom: 14px;
+    }
 }
+
